@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Exclude } from 'class-transformer';
-import mongoose, { HydratedDocument, Types } from 'mongoose';
+import { HydratedDocument, Types } from 'mongoose';
 
 export type UserDocument = HydratedDocument<User>;
 
@@ -9,7 +9,7 @@ export class User {
   _id: Types.ObjectId;
 
   @Prop({ required: true })
-  name: string;
+  userName: string;
 
   @Prop({ required: true })
   email: string;
