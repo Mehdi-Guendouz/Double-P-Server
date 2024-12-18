@@ -12,15 +12,23 @@ export class History {
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
   user: User;
 
-  @Prop({ required: true })
-  enum: [Action_Type.Palindrome, Action_Type.NumberParfait];
-  action: string;
+  @Prop({ required: true, enum: Action_Type })
+  actionType: string;
 
-  @Prop({ required: true })
-  value: string;
+  @Prop({ required: false })
+  word: string;
 
-  @Prop({ required: true })
+  @Prop({ required: false })
+  number: number;
+
+  @Prop({ required: false })
   description: string;
+
+  @Prop({ required: true })
+  isValid: boolean;
+
+  @Prop({ required: false })
+  nearestPerfectNumber: number;
 }
 
 export const HistorySchema = SchemaFactory.createForClass(History);

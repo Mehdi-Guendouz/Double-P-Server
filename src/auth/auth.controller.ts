@@ -12,7 +12,7 @@ import { AuthService } from './auth.service';
 import { Public } from './decorators/public.decorator';
 import { CreateAuthDto } from './dto/create.auth.dto';
 import { LoginDto } from './dto/login.dto';
-import { Response } from 'express';
+import { Request, Response } from 'express';
 
 @Controller('auth')
 export class AuthController {
@@ -34,5 +34,14 @@ export class AuthController {
     @Res({ passthrough: true }) response: Response,
   ) {
     return this.authService.login(loginDto, response);
+  }
+
+  @Get('refresh')
+  @Public()
+  refresh(
+    @Req() request: Request,
+    @Res({ passthrough: true }) response: Response,
+  ) {
+    return this.authService.refresh(request, response);
   }
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { User } from './schema/users.schema';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import * as bcrypt from 'bcrypt';
 
@@ -13,6 +13,10 @@ export class UsersService {
 
   async findUserByEmail(email: string): Promise<User> {
     return this.userModel.findOne({ email }).select('+password');
+  }
+
+  async findUserById(id: Types.ObjectId): Promise<User> {
+    return this.userModel.findById(id).select('+password');
   }
 
   async hashPassword(password: string) {

@@ -81,6 +81,34 @@ export class AuthService {
     };
   }
 
+  async refresh(req: Request, response: Response) {
+    const cookies = req.cookies;
+    const options = {
+      httpOnly: true,
+      secure: true,
+    };
+
+    if (!cookies?.refreshToken) {
+      throw new UnauthorizedException('Invalid credentials');
+    }
+    const decoded = await this.jwtService.verifyAsync(cookies.refreshToken, {
+      secret: process.env.JWT_SECRET_REFRESH,
+    });
+    const user = await this.usersService.findUserById(decoded.id);
+    if (!user) {
+      throw new UnauthorizedException('Invalid credentials');
+    }
+    const token = await this.generateAccessToken(user);
+    const refreshToken = await this.generateRefreshToken(user);
+    response.cookie('accessToken', token, options);
+    response.cookie('refreshToken', refreshToken, options);
+    return {
+      token,
+      refreshToken,
+      email: user.email,
+    };
+  }
+
   async generateAccessToken(user: User) {
     return this.jwtService.signAsync(
       {
