@@ -16,7 +16,9 @@ export class FunctionalitiesService {
 
   //   for the user to get the history of his transactions
   async getAllHistory(user: UserToken) {
-    const history = await this.historyModel.find({ user: user.id });
+    const history = await this.historyModel
+      .find({ user: user.id })
+      .populate('user');
     // we check for the history of the user if its not found we throw an error
     if (!history) {
       throw new NotFoundException('No history found');
