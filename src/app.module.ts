@@ -10,7 +10,9 @@ import { FunctionalitiesModule } from './functionalities/functionalities.module'
 @Module({
   imports: [
     ConfigModule.forRoot(),
-    MongooseModule.forRoot(process.env.DB_URI),
+    MongooseModule.forRoot(process.env.DB_URI, {
+      retryWrites: true,
+    }),
     AuthModule,
     UsersModule,
     FunctionalitiesModule,
