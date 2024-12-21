@@ -1,15 +1,10 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
-import { Callback, Context, Handler } from 'aws-lambda';
-import serverlessExpress from '@codegenie/serverless-express';
+import { hostname } from 'node:os';
 
-let server: Handler;
-
-async function bootstrap(): Promise<Handler> {
+async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  await app.init();
-
   app.useGlobalPipes(
     new ValidationPipe({
       transform: true,
@@ -21,16 +16,6 @@ async function bootstrap(): Promise<Handler> {
     origin: [process.env.CLIENT_URL],
     credentials: true,
   });
-  const expressApp = app.getHttpAdapter().getInstance();
-
-  return serverlessExpress({ app: expressApp });
+  await app.listen(process.env.PORT);
 }
-
-export const handler: Handler = async (
-  event: any,
-  context: Context,
-  callback: Callback,
-) => {
-  server = server ?? (await bootstrap());
-  return server(event, context, callback);
-};
+bootstrap();
