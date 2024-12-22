@@ -11,13 +11,9 @@ async function bootstrap() {
     }),
   );
   app.setGlobalPrefix('api');
-  app.use((req, res, next) => {
-    console.log('Origin:', req.headers.origin, process.env.CLIENT_URL);
-    next();
-  });
 
   app.enableCors({
-    origin: ['http://localhost:5173', 'https://double-p-app.vercel.app/'],
+    origin: [process.env.CLIENT_URL],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true,
   });
