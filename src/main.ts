@@ -11,13 +11,13 @@ async function bootstrap() {
     }),
   );
   app.setGlobalPrefix('api');
+  app.use((req, res, next) => {
+    console.log('Origin:', req.headers.origin, process.env.CLIENT_URL);
+    next();
+  });
   app.enableCors({
     origin: [process.env.CLIENT_URL],
     credentials: true,
-  });
-  app.use((req, res, next) => {
-    console.log('Origin:', req.headers.origin);
-    next();
   });
   await app.listen(5000);
 }
