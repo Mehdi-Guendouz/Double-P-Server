@@ -15,8 +15,9 @@ async function bootstrap() {
     console.log('Origin:', req.headers.origin, process.env.CLIENT_URL);
     next();
   });
+
   app.enableCors({
-    origin: [process.env.CLIENT_URL],
+    origin: ['http://localhost:5173', 'https://double-p-app.vercel.app/'],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true,
   });
