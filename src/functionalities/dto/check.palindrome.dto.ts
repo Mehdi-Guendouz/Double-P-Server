@@ -25,7 +25,7 @@ export class PalindromeDto {
   @MinLength(2, {
     message: 'description is too short',
   })
-  @MaxLength(50, {
+  @MaxLength(500, {
     message: 'description is too long',
   })
   description: string;
@@ -47,7 +47,7 @@ export class NumberParfaitDto {
   @MinLength(2, {
     message: 'description is too short',
   })
-  @MaxLength(50, {
+  @MaxLength(500, {
     message: 'description is too long',
   })
   description: string;
