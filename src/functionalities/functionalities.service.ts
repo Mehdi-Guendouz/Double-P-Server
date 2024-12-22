@@ -155,6 +155,7 @@ export class FunctionalitiesService {
   //   this function gives you the nearest perfect number of a giving number
 
   async nearestPerfectNumber(user: Types.ObjectId, input: NumberParfaitDto) {
+    // we check if the number is a perfect number so we don't have to find the nearest perfect number because its already a perfect number
     const isPerfect = await this.checkIfNumberIsPerfect(input.number);
     const historyDetails = {
       user: user.id,

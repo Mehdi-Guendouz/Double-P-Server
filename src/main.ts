@@ -13,7 +13,7 @@ async function bootstrap() {
   );
   app.setGlobalPrefix('api');
   app.enableCors({
-    origin: [process.env.CLIENT_URL],
+    origin: [process.env.CLIENT_URL, 'https://double-p-app.vercel.app/'],
     credentials: true,
   });
   await app.listen(5000);
